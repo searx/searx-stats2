@@ -20,11 +20,14 @@ COPY requirements.txt ./
 RUN apt-get update \
  && apt-get -y --no-install-recommends install \
     wget git build-essential python3-dev libxslt1-dev zlib1g-dev libffi-dev libssl-dev libyaml-dev \
-    tor tini bzip2 \
+    tor tini bzip2 nodejs \
     $(apt-cache depends --no-recommends --no-suggests --no-conflicts --no-breaks \
       --no-replaces --no-enhances --no-pre-depends firefox-esr | grep -v "firefox-esr" | cut -f2 -d\:) \
  && pip3 install --upgrade pip \
  && pip3 install --no-cache -r requirements.txt \
+ && cd /usr/local/searxstats/output/static \
+ && npm install \
+ && cd /usr/local/searxstats \
  && apt-get -y purge build-essential python3-dev libxslt1-dev zlib1g-dev \
  && apt-get -y --no-install-recommends install libxslt1.1 libxml2 zlib1g libffi6 libssl1.1 \
  && apt-get -y autoremove \

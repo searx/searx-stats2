@@ -18,7 +18,7 @@ Note: cryptcheck-backend is used to get the TLS grade.
 
 Install packages:
 ```sh
-apt install firefox wget git build-essential python3-dev virtualenv python3-virtualenv libxslt-dev zlib1g-dev libffi-dev libssl-dev libyaml-dev
+apt install firefox wget git build-essential python3-dev virtualenv python3-virtualenv libxslt-dev zlib1g-dev libffi-dev libssl-dev libyaml-dev nodejs
 ```
 
 ### Get the project

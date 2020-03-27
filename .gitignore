@@ -17,6 +17,7 @@ dist/
 *.egg-info/
 
 cache
+build
 htmlcov
 ve
 node_modules

@@ -1,0 +1,115 @@
+.home {
+  padding: 56px 20px;
+  min-height: 100%;
+  width: 100%;
+}
+
+.column_url {
+  max-width: 26rem;
+  width: 26rem;
+}
+
+.column-certificate {
+  max-width: 29rem;
+  width: 29rem;
+}
+
+.column-comments {
+  min-width: 40rem;
+}
+
+.column-alternativeurls {
+  min-width: 40rem;
+}
+
+tbody .column-url:hover,
+tbody .column-certificate:hover {
+  max-width: 100rem;
+}
+
+tbody .column-url,
+tbody .column-certificate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: keep-all;
+  white-space: nowrap;
+}
+
+tbody .column-url:hover,
+tbody .column-certificate:hover {
+  position: absolute;
+  background: inherit;
+  border: none;
+  width: auto;
+  overflow: visible;
+  text-overflow: inherit;
+  word-break: keep-all;
+  white-space: nowrap;
+}
+
+main thead th {
+  padding: 2px;
+  vertical-align: middle !important;
+}
+
+.column-status {
+  max-width: 6rem;
+  width: 6rem;
+  text-align: center;
+}
+
+.column-version {
+  max-width: 16rem;
+  min-width: 16rem;
+  width: 16rem;
+}
+
+.column-csp,
+.column-tls,
+.column-html,
+.column-ipv6 {
+  max-width: 7rem;
+  width: 7rem;
+  text-align: center;
+}
+
+.column-country {
+  max-width: 9rem;
+  width: 9rem;
+  text-align: center;
+}
+
+.column-network {
+  width: 29rem;
+}
+
+.column-responsetime {
+  max-width: 9rem;
+  width: 9rem;
+  text-align: right;
+}
+
+.column-filter {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+
+div.table-responsive table th.column-responsetime {
+  white-space: normal;
+}
+
+tbody .column-responsetime {
+  line-break: loose;
+}
+
+.column-engine-status {
+  max-width: 4rem;
+  width: 4rem;
+  text-align: center;
+}
+
+.column-error {
+  max-width: auto;
+  width: 60rem;
+}

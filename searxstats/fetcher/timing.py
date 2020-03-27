@@ -123,7 +123,7 @@ async def get_cookie_settings(client, url):
     return DEFAULT_COOKIES
 
 
-@MemoizeToDisk(expire_time=3600)
+@MemoizeToDisk(expire_time=3600*24)
 async def fetch_one(instance: str) -> dict:
     timings = {}
     try:

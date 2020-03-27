@@ -23,7 +23,7 @@ async def get_searx_version(response):
         return None
 
 
-@MemoizeToDisk(expire_time=3600)
+@MemoizeToDisk(expire_time=3600*24)
 async def fetch_one(instance_url: str, private: bool) -> dict:
     detail = dict()
     # no cookie ( cookies=DEFAULT_COOKIES,  )
@@ -101,7 +101,8 @@ async def fetch_one_display(url: str, private: bool) -> dict:
 
 async def fetch(searx_stats_result: SearxStatisticsResult):
 
-    url_to_deleted = []
+    url_to_delete = []
+    url_to_update = {}
 
     async def fetch_and_set_async(url: str, detail, *_, **__):
         if 'version' not in detail:
@@ -110,11 +111,13 @@ async def fetch(searx_stats_result: SearxStatisticsResult):
             if r_url != url:
                 # another r_url will never be url (the variable)
                 # since r_url is the result of following HTTP redirect
-                url_to_deleted.append(url)
-            searx_stats_result.update_instance(r_url, r_detail)
+                url_to_delete.append(url)
+            url_to_update[r_url] = r_detail
 
     instance_iterator = searx_stats_result.iter_instances(only_valid=False, valid_or_private=False)
     await for_each(instance_iterator, fetch_and_set_async, limit=1)
 
-    for url in url_to_deleted:
+    for url in url_to_delete:
         del searx_stats_result.instances[url]
+    for url, detail in url_to_update.items():
+        searx_stats_result.update_instance(url, detail)

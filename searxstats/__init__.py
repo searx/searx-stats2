@@ -4,6 +4,7 @@ import asyncio
 from .common import initialize as initialize_common, finalize as finalize_common
 from .fetcher import fetch, initialize as initialize_fetcher, FETCHERS
 from .searx_instances import get_searx_stats_result_from_repository, get_searx_stats_result_from_list
+from .output import write as output_write
 
 
 async def initialize():
@@ -26,7 +27,7 @@ def initialize_logging():
         logging.getLogger(logger_name).setLevel(logging.WARNING)
 
 
-async def run_once(output_file: str, private: bool, instance_urls: list, selected_fetcher_names: list):
+async def run_once(output_directory: str, private: bool, instance_urls: list, selected_fetcher_names: list):
     # select fetchers
     selected_fetchers = list(
         filter(lambda f: f.name in selected_fetcher_names, FETCHERS))
@@ -47,7 +48,7 @@ async def run_once(output_file: str, private: bool, instance_urls: list, selecte
     await fetch(searx_stats_result, selected_fetchers)
 
     # write results
-    searx_stats_result.write(output_file)
+    output_write(searx_stats_result, output_directory)
 
 
 async def run_server(*args, **kwargs):

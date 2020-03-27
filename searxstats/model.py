@@ -1,7 +1,6 @@
 import inspect
 import calendar
 import datetime
-import json
 from enum import Enum
 
 from .common.memoize import erase_by_name
@@ -61,8 +60,8 @@ class SearxStatisticsResult:
         else:
             self.instances[url] = detail
 
-    def write(self, output_file_name):
-        searx_json = {
+    def get_json(self):
+        return {
             'metadata': self.metadata,
             'instances': self.instances,
             'engines': self.engines,
@@ -70,8 +69,6 @@ class SearxStatisticsResult:
             'hashes': self.hashes,
             'cidrs': self.cidrs,
         }
-        with open(output_file_name, "w") as output_file:
-            json.dump(searx_json, output_file, indent=4, ensure_ascii=False)
 
 
 class Fetcher:

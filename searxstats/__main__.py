@@ -1,3 +1,4 @@
+import os
 import argparse
 import asyncio
 
@@ -8,13 +9,13 @@ from . import initialize, run_once, run_server, erase_memoize, finalize
 
 
 # pylint: disable=too-many-arguments
-def run(server_mode: bool, output_file_name: str, user_cache_directory: str,
+def run(server_mode: bool, output_directory: str, user_cache_directory: str,
         instance_urls: list, private: bool, selected_fetcher_names: list, update_fetcher_memoize_list: list):
     private_str = 'Private' if private else 'Public'
     server_mode_str = 'server mode' if server_mode else 'single run'
     server_emoji_str = '🤖' if server_mode else '⚡'
     print('{0} {1} {2}'.format(server_emoji_str, private_str, server_mode_str))
-    print('{0:15} : {1}'.format('Output file', output_file_name))
+    print('{0:15} : {1}'.format('Output direcotry', output_directory))
     print('{0:15} : {1}'.format('Cache directory', user_cache_directory))
     if server_mode:
         run_function = run_server
@@ -43,18 +44,19 @@ def run(server_mode: bool, output_file_name: str, user_cache_directory: str,
         erase_memoize(update_fetcher_memoize_list)
 
         # run
-        loop.run_until_complete(run_function(output_file_name, private, instance_urls, selected_fetcher_names))
+        loop.run_until_complete(run_function(output_directory, private, instance_urls, selected_fetcher_names))
     finally:
         # finalize
         loop.run_until_complete(finalize())
 
 
 def main():
+    output_directory = os.path.join(os.getcwd(), 'output')
     parser = argparse.ArgumentParser(description='Check searx instances.')
     parser.add_argument('--output', '-o',
-                        type=str, nargs='?', dest='output_file_name',
-                        help='JSON output file name',
-                        default='html/data/instances.json')
+                        type=str, nargs='?', dest='output_directory',
+                        help='Output directory',
+                        default=output_directory)
     parser.add_argument('--private',
                         action='store_true', dest='private',
                         help='In private execution mode, fetch data even if the website is not a searx instance',
@@ -104,7 +106,7 @@ def main():
         print('Missing URLs')
     else:
         run(args.server_mode,
-            args.output_file_name,
+            args.output_directory,
             args.user_cache_directory,
             args.instance_urls,
             args.private,
